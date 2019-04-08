@@ -1,19 +1,18 @@
-#   Thales de Castro Soares 86958
 import cv2
 import numpy as np
 
 def main():
     img = cv2.imread('lena512.jpg',0)
-    
-    
+
+
    # print(triangulo_Pascal(5))
     cv2.imshow('original', img)
     cv2.imshow('resultado',filtro_gaussiano(img, 5))
-    
+
     filtro_cv2 = cv2.GaussianBlur(img,(5,5),0)
-    
+
     cv2.imshow('filtro_CV2', filtro_cv2)
-    
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -27,11 +26,11 @@ def filtro_gaussiano(imagem, tamanho):
     size = imagem.shape
     g_inicial = np.zeros((size[0], size[1]), dtype = 'uint8')
     g_final = np.zeros((size[0], size[1]), dtype = 'uint8')
-    
+
     fator = (np.power(2,(tamanho-1)))
- 
+
     mask = (triangulo_Pascal(tamanho))/fator
-    
+
     for i in range(size[0]-tamanho//2):
         for j in range(size[1]-tamanho//2):
             soma = 0
@@ -47,7 +46,7 @@ def filtro_gaussiano(imagem, tamanho):
                     if i>=tamanho//2 :
                         soma = soma + g_inicial[i-(tamanho//2)+u, j]*mask[u]
             g_final[i,j] = soma
-    
+
     return g_final
 
 
